@@ -128,7 +128,7 @@ public class SummarizeHistogramLogs implements Runnable
 
     private void summarizeAndPrint() throws FileNotFoundException
     {
-        Map<String, Histogram> sumByTag = new HashMap<>();
+        Map<String, Histogram> sumByTag = new TreeMap<>();
 
         long period = 0;
         long intervalLengthSum = 0;
@@ -228,13 +228,13 @@ public class SummarizeHistogramLogs implements Runnable
             }
         }
     }
-    
+
     private boolean shouldSkipTag(String ntag)
     {
         ntag = (ntag == null) ? "default" : ntag;
         return excludeTags.contains(ntag) || (!includeTags.isEmpty() && !includeTags.contains(ntag));
     }
-    
+
     private PrintStream getOut(String tag) throws FileNotFoundException
     {
         PrintStream report = System.out;
@@ -285,7 +285,7 @@ public class SummarizeHistogramLogs implements Runnable
             out.println(count);
         }
     }
-    
+
     private void printCsvE(PrintStream out, Histogram sum)
     {
         long max = (long) (sum.getMaxValue() / outputValueUnitRatio);
